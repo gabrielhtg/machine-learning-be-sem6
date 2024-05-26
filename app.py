@@ -25,17 +25,13 @@ def predict():  # put application's code here
     data = request.json
 
     country = str(data.get('country')).split(",")
-    try :
-        prediction_result = ann.predict(sc.transform(
-            [[int(country[0]), int(country[1]), int(country[2]), data.get('credit_score'), int(data.get('gender')),
-              data.get('age'),
-              data.get('tenure'), data.get('balance'), data.get('number_of_products'), int(data.get('credit_card')),
-              int(data.get('active_member')),
-              data.get('estimated_salary')]])) > 0.5
-        return {"data": str(prediction_result[0][0])}
-
-    except Exception as e:
-        return jsonify({"error": e}), 400
+    prediction_result = ann.predict(sc.transform(
+        [[float(country[0]), float(country[1]), float(country[2]), data.get('credit_score'), int(data.get('gender')),
+          data.get('age'),
+          data.get('tenure'), float(data.get('balance')), data.get('number_of_products'), int(data.get('credit_card')),
+          int(data.get('active_member')),
+          float(data.get('estimated_salary'))]])) > 0.5
+    return {"data": str(prediction_result[0][0])}
 
 
 @app.route('/get-geography')
