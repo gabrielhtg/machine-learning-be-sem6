@@ -107,5 +107,5 @@ if __name__ == '__main__':
     ann.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
     # Training the ANN on the Training set
-    # ann.fit(X_train, y_train, batch_size=32, epochs=100)
+    ann.fit(X_train, y_train, batch_size=32, epochs=100)
     app.run()
