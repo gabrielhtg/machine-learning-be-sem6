@@ -1,5 +1,4 @@
 import keras
-# Importing the libraries
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -51,8 +50,6 @@ if __name__ == '__main__':
     X = dataset.iloc[:, 3:-1].values
     y = dataset.iloc[:, -1].values
 
-    # Encoding categorical data
-    # Label Encoding the "Gender" column
     gender_old = X[:, 2].copy()
     print(gender_old)
     le = LabelEncoder()
@@ -66,7 +63,6 @@ if __name__ == '__main__':
         else:
             break
 
-    # One Hot Encoding the "Geography" column
     x_old = X
     print(x_old[0][1])
     ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [1])], remainder='passthrough')
@@ -80,32 +76,20 @@ if __name__ == '__main__':
         else:
             break
 
-    # Splitting the dataset into the Training set and Test set
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-    # Feature Scaling
     X_train = sc.fit_transform(X_train)
     X_test = sc.transform(X_test)
 
-    # Part 2 - Building the ANN
-
-    # Initializing the ANN
     ann = keras.models.Sequential()
 
-    # Adding the input layer and the first hidden layer
     ann.add(tf.keras.layers.Dense(units=6, activation='relu'))
 
-    # Adding the second hidden layer
     ann.add(tf.keras.layers.Dense(units=6, activation='relu'))
 
-    # Adding the output layer
     ann.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
 
-    # Part 3 - Training the ANN
-
-    # Compiling the ANN
     ann.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-    # Training the ANN on the Training set
     ann.fit(X_train, y_train, batch_size=32, epochs=100)
     app.run()
